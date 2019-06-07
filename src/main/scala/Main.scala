@@ -25,11 +25,20 @@ object Main {
 
     val percentageSocialMediaView  = surveyProcessing.createPercentageSocialMediaView()
 
+    val percentagePlatformUsedView  = surveyProcessing.createPercentagePlaformUsed()
+
+    val percentageLanguageUsedView  = surveyProcessing.createPercentageLanguageUsed()
+
+    val ageAverageByCountryView  = surveyProcessing.createAgeAverageByCountry()
+
     ElasticViewWriter.writeView(developerOpenSourcePercentageView, "DeveloperOpenSourcePercentageView")
     ElasticViewWriter.writeView(ageGenderView, "developerOpenSourcePercentageView")
     ElasticViewWriter.writeView(percentageDevStudentsView, "percentageDevStudentsView")
     ElasticViewWriter.writeView(percentageByEthnicityView, "percentageByEthnicityView")
     ElasticViewWriter.writeView(percentageSocialMediaView, "percentageSocialMediaView")
+    ElasticViewWriter.writeView(percentagePlatformUsedView, "percentageByEthnicityView")
+    ElasticViewWriter.writeView(percentageLanguageUsedView, "percentageLanguageUsedView")
+    ElasticViewWriter.writeView(ageAverageByCountryView, "ageAverageByCountryView")
 
     spark.stop();
   }
