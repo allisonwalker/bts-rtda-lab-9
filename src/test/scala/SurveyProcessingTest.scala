@@ -18,7 +18,7 @@ class SurveyProcessingTest extends FunSuite with DatasetSuiteBase {
     assert(realDeveloperCount == expectedDeveloperCount)
   }
 
-  test("Test functionality: Percentage of developers how do open source") {
+  test("Test functionality: Percentage of developers who do open source") {
     import spark.implicits._
 
     val expectedOpenSourcePercentageSeq = Seq(
@@ -117,6 +117,48 @@ class SurveyProcessingTest extends FunSuite with DatasetSuiteBase {
     val surveyProcessing: SurveyProcessing = new SurveyProcessing(surveyDataFrame, spark);
 
     val realAvg = surveyProcessing.createPercentageSocialMediaView();
+
+    assert(expectedAvg, realAvg.take(2))
+  }
+
+  test("Average age per country") {
+    val expectedAvg = Array(
+      AgeAverageByCountryView("Papua New Guinea", 63.0),
+      AgeAverageByCountryView("Saint Kitts and Nevis", 57.0)
+    )
+
+    val surveyDataFrame = readFromTestFile();
+    val surveyProcessing: SurveyProcessing = new SurveyProcessing(surveyDataFrame, spark);
+
+    val realAvg = surveyProcessing.createAgeAverageByCountry();
+
+    assert(expectedAvg, realAvg.take(2))
+  }
+
+  test("Percentage of use of language") {
+    val expectedAvg = Array(
+      PercentageLanguageUsedView("JavaScript", 59219, 13.403452545046726),
+      PercentageLanguageUsedView("HTML/CSS", 55466, 12.554009673644636)
+    )
+
+    val surveyDataFrame = readFromTestFile();
+    val surveyProcessing: SurveyProcessing = new SurveyProcessing(surveyDataFrame, spark);
+
+    val realAvg = surveyProcessing.createPercentageLanguageUsed();
+
+    assert(expectedAvg, realAvg.take(2))
+  }
+
+  test("Percentage of use of platform") {
+    val expectedAvg = Array(
+      PercentagePlatformUsedView("Linux", 42753, 15.479729313834467),
+      PercentagePlatformUsedView("Windows", 40630, 14.71104722524956)
+    )
+
+    val surveyDataFrame = readFromTestFile();
+    val surveyProcessing: SurveyProcessing = new SurveyProcessing(surveyDataFrame, spark);
+
+    val realAvg = surveyProcessing.createPercentagePlaformUsed();
 
     assert(expectedAvg, realAvg.take(2))
   }
